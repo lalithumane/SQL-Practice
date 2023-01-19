@@ -1,0 +1,402 @@
+# primary key - is a combination of not null and not repeted values 
+# to apply autoincrement constraint we simply have to write autoincrement keyword while ceating a new table into which field which have number data type 
+# datatype in SQL -> number, Text, Date
+
+show databases;      # it will show all databases present in to My SQL Database
+
+use world;      # it will use World Database
+
+show tables;       # it will show all tables present in world database
+
+select * from city;      # it will show all details present in table name - 'city' 
+
+select * from city           # this is 'order by' clause/syntax it will show all details from city and sort it by name 
+order by NAME ;
+
+select * from city 
+where CountryCode = 'IND'      # this is 'order by' clause with 'where' clause it will find and show all details in city table where country code is IND and sort it by name 
+order by Name; 
+select distinct CountryCode , population from city    # this is 'distinct' clause with order by it find and show all distinct values from 
+order by Name;                                        # country code and population field and sort it by name field
+
+select * from city where CountryCode = 'IND'         # ( we can use order by clause with multiple conditions a) where b) distinct c) various operator [and , between , like]
+and population < 100000 ;                            # arithmatic operator to find data by numeric value [> , < ] we can use [ = ] operator to find specific data in any field 
+
+select * from city order by population DESC;            # with 'DESC' keyword at end of order by clause it will give result in descending order
+														# we dont need to mention 'ASC' for ascending while sorting because by default in order by  
+                                                        # it always sort in ascending mode
+
+select name , countrycode,population from city where countrycode = 'IND'
+order by population;
+
+select  count(district) from city   # by adding 'count' with in bracket 'distinct' it will give distinct/different value in city table and count of all distinct/different values 
+ where countrycode = 'IND'           # where country code is 'IND' and by default sort it by ascending mode in district field  
+order by district ;
+describe city ;           # it will show all details(properties) of table 
+
+select* from city;
+insert into city values (4081,     # this is modern way to add data in table just by adding direct value to table by referring field sequace in same format with same data type
+'Suraj','IND','Amravati',300000);
+
+insert into city (name,countrycode,district,population) 
+values ('Lalit','IND','Amravati',300000);    # this is traditional approch to insert data into a table with mentioning field name first and next data refferring to it in to syntax 
+
+select ID from city
+order by ID DESC;
+
+insert into city (name,countrycode)
+values ('Nilesh','IND');   # we can also add data to 1 or more specific field by specifically mentioning field name first 
+
+select * from city where name = 'Nilesh' ;
+
+select * from city where name = 'Lalit';   # with the help of where clause and equal to (=) operator we can find particular data in any field  
+use world;
+select * from city;
+select name 
+from city 
+where name is null;  # shevti 'IS NULL' keyword add karun apan ekhadya column madhe NUll vallue ahe ki nahi he shodhu shakto 
+
+select * from city   # 'IS NULL' madhe apan fakt 1 column use karu shakto 
+where name is null;    # yat sarve column print hotil pn accourdingly name column 
+
+# Alter Command
+
+alter table timepass add column ( city varchar (25));      # alter command (add column)
+alter table timepass rename column branch  to  BRANCH;		# alter command (rename column)
+alter table timepass drop column city ;						# alter command ( drop column)
+-- 
+
+update city
+set name = 'Swapnil'   # 'UPDATE'  statement madhe apan kuthlyahi field chya atmadhe particular record madhla data change kar shakto 
+where name = 'Nilesh' ; # SET keywod use karun apan data set karu shakto ani WHERE clause lihun tyala condition deu shakto 
+						# WHERE clause lihina mandotary ahe nahi tr tr tya field madhe sarv data change houn jail 
+select * from city where
+name = 'Swapnil' ;
+
+delete from city     # 'DELETE' command multidelete aste yat where clause ni condition deun apan particular id chi complete record madhe asleli information delete karu shakto  
+where name = 'Swapnil' ;  # apan 'DELETE'  chya upayogane eka particular field madhla data delete karu shakat nahi karan 'DELETE' he 'MULTIDELETE' aste 
+
+select * from city 
+where name = 'Lalit' ;
+
+delete from city 
+where name = 'Lalit' ;
+
+select * from city limit 10;
+
+select countrycode , population 
+from city                       # with the help of 'LIMIT' statement we can limit the output to require number ( we can use 1 or more columns to get data from )
+where countrycode = 'IND'       # we can use 'ORDER BY' also to get a by default sorted data in Ascending format 
+order by population desc
+limit 5 ;
+
+select min(population)  # 'MIN' function shows minimum value in a particular field
+from city;
+
+select min(population) as min_pop -- we can use allias with min function mentioning allias name for filed so it can show minimum value in allias field name 
+from city ;
+
+select min(population) as with_where_clause
+from city 
+where countrycode = 'IND'; -- we can also provide condition with the help of where clause in minimun function to show result
+
+# Aggregate functions 1) Count() ....Count all number of records present in a particular column 
+				#	  2) Avg()  ......it shows average from a particular column 
+                 #    3) Sum()  ......it shows sum of all values from a particular column 
+                       
+              # we can provide specific conditions with 'Where' clause while using aggreate function 
+              
+select count(population) as count_of_row       # it shows count of all records present in a particular column/field , we can not add multiple columns in it 
+from city;
+
+select avg(population) as average        # it shows Average of all values present in a particular column 
+from city;
+
+select sum(population) as summesion         # it shows sum of all values present in a particular column 
+from city;
+
+use world;
+select * from city;                        # We can use like to find data with where clause , with the help of giving reference to specified character 
+										   # note - reference character should always accompanied with percentile symbol and enclosed in single  quote
+select * from city 
+where district like 'a%';                  # it shows all districts which starts from a 
+
+select * from city 
+where district like '%j' ;                # it shows all districts which ends from j  ..........while using like operator it is mandatory to use percentile symbol ( % )
+
+# wilcards characters 
+		# wildcards character are used with like operator and like operator are used with where clause       where --->  like --->  ---> wildcard character( to find certain value )
+        # ' % '---> to find one or more character (after or before percentile symbol)
+			# 'a%'  --------> it will find value starts with a 
+			# '%a'  --------> it will find value ends with a 
+			# ' a%o '---> Finds any values that starts with "a" and ends with "o"
+		# ' _ ' ---> it represents a single character 
+			# ' _r% '--->  Finds any values that have "r" in the second position
+			# ' a__% '---> Finds any values that starts with "a" and are at least 3 characters in length
+		# [character list]% ---> we can use multiple character conditions within a bracket 
+			# [abc]% ---> it will show all words which starts from a , b and c 
+            
+select * from city 
+where district like '%h' ;                 # use of percentile wildcard 
+
+select * from city 
+where district like '%ji%' ;               # it is showing all districts where ' ji ' presents in any district name , by putting percentile symbol on both side we are mentioning 
+										   # that we want all results which include ji we do not care for before and after character 
+                                           
+select * from city ;
+
+select * from city
+where countrycode like '_ND' ;             # it is showinng all countrycode which have second position ' N ' and third position ' D ' it automatically finds relevenat words 
+										   # it can work on any position of the character (start,second,mid,end)
+
+# we can directly do arithmatic operations by column to column ( like column1 / column2) --- like this 
+
+select Region , SurfaceArea , GNP , SurfaceArea / GNP as Arithmatic_Operation from country;   -- arithmatic operaton by giving an alias name to result colmn
+select Region,SurfaceArea,GNP, SurfaceArea / GNP 'Arithmatic_operation' from country;         -- we can get same result with adding as for alias name we just have to give new column name in single quote
+
+select concat(name ,' ',surname) 'Full Name' from sample;     -- we can join and view data from different column in a single column it works just like concat() in MS Excel
+select concat(name ,' ','-->',' ',salary) 'name with his salary' from sample ; -- we can also add characters or symbols in combined column if we want 
+
+select * from city 
+where population between 50000 and 500000  
+and Countrycode in ("IND") ;                 # Between example
+
+select * from city 
+where population between 50000 and 500000
+and countrycode not in ("IND") ;    # Between example
+
+select * from city 
+where population not between 50000 and 500000;         # Not between example	
+
+select c1.countrycode , c2.continent
+from city as c1, country as c2;             # Alias example
+
+select c1.countrycode , c2.continent
+from city as c1 , country as c2
+where c1.countrycode = "IND" and c2.continent = "ASIA" ;       # Alias example
+
+# Practice on Different types of joins 
+
+select city.countrycode , country.continent
+from city
+inner join country on country.code = city.countrycode ;         # inner join example
+
+select  city.name ,country.continent
+from city
+full join country on city.name = country.name;    				# full join example
+
+select student.student_id, maneuver_venture.emp_id
+from student 
+full join maneuver_venture on student.student_id = maneuver_venture.emp_id ;    # full join example 
+
+select city.countrycode , city.district , country.code
+from city
+left join country on city.countrycode = country.code           # left join example
+order by city.population ;
+
+select city.district , country.code
+from city
+right join country on city.countrycode = country.code
+order by city.id Desc ;   											 # right join exapmle
+
+select A.countrycode as cc1 , B.countrycode as cc2 , A.district
+from city A , city B
+where A.countrycode <> B.countrycode                                # Self join example
+order by district ;    			
+
+select countrycode , name from city
+union
+select code , name from country ;       # Union example _____ show only combined distinct values
+
+select countrycode , name from city
+union all
+select code , name from country
+order by name Desc ;                    # Union all Example ___________ show all combined values with order by clause 
+
+select countrycode , name from city
+where countrycode = "IND"
+union 
+select code , name from country ;             # union with where clause 
+
+select "Cuntrycode" as type , name from city 
+union
+select "code" , name from country ;        # another important union example
+
+select count(countrycode) , name 
+from city 
+group by name ;                # Group by example
+
+select count(code) , name
+from country
+group by name 
+order by code Desc ;             # group by example with order by in descending sorting
+
+select count(countrycode) , district
+from city 
+group by district 
+order by countrycode Desc;         # group by example 
+
+select count(population) , district 
+from city
+having max(population) > 25 ;            # having example
+
+select count(id) , name , district
+from city 
+where countrycode = "IND"
+group by district
+having count(id) > 5
+order by id desc ;                       # Group by , order by , having example 
+
+select count(city.countrycode) , city.district , country.name , country.continent
+from city
+inner join country on city.countrycode = country.code
+where  countrycode = "IND"
+group by district 
+having count(city.countrycode) > 5
+order by count(city.countrycode) ;                 # example of having clause with inner join , where clause , group by , order by , aggregate function
+
+select countrycode, population , district	
+from city 
+where exists
+(select district from city where population between 100000 and 500000 and district like "M%") ;            # example of exists
+
+select district , population , countrycode
+from city 
+where exists
+(select countrycode from city where population > 100000 and countrycode = "AFG")                              # example of exists
+limit 100;
+
+select countrycode , district , population
+from city
+where countrycode = any
+(select countrycode
+from city 
+where population > 100000);              # example of Any
+
+select district ,population from city
+where district = any
+(select district from city 
+where population between 100000 and 500000 and district = "Karnataka")
+limit 10;				# example of Any	
+
+select code , name 
+from country
+where code = Any
+(select code from country where code = "IND");                # example of Any
+
+select all district
+from city 
+where true ;                                      # example of All
+
+select district , population , countrycode , name 
+from city 
+where countrycode = all                                                               # example of All
+(select countrycode where district = "Maharashtra" and population > 100000);
+
+create table Asia_countries
+select * from country                  # alternative to select int command to get copied result 
+where continent  = "Asia" ;
+
+create table Asia_countries
+select * from country                  # alternative to select int command to get copied result 
+where continent  = "Asia" ;
+
+insert into asian_country	
+select * from country                        # example of insert into select 
+where continent = "Asia";
+
+select district , countrycode , population, 
+CASE
+	when countrycode = "IND" then "INDIA"
+    when population > 100000 then " Population is greater than 100000"           # example of Case Statement --- if , else
+    else " it is working"
+end 
+from city ;
+select countrycode , district , population, name,
+case 
+	when countrycode = "AFG" then "ASIA"
+    when District = "Maharashtra" then "Vidarbh"                   # example of Case with where clause and by assingning alias to Case field
+    else "finaly doing this "                                  
+end as conditionals
+from city;
+
+select * ,
+case
+when marks >= 80 then "A"
+when marks >= 70 and marks <= 79 then "B"
+when marks >= 35 and marks <= 49 then "D"              # case expression exmple 
+when marks >= 50 and marks <= 69 then "C"
+else "Re-attempt the exam "
+end as "Grade Result" 
+from grades;
+
+
+select district , population
+from city 
+order by 
+(case
+	when district = "Maharashtra" then "Vidarbh"              # example of Case with order by statement
+    else district
+
+-- Stored Procedure Practice 
+
+create schema stored_proc_tutorial;	        # created a schema to work on stored procedure 
+
+-- table creation
+CREATE TABLE studentMarks (stud_id SMALLINT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY, total_marks INT, grade VARCHAR(5));
+ 
+-- insert sample data
+INSERT INTO studentMarks(total_marks, grade) VALUES(450, 'A'), (480, 'A+'), (490, 'A++'), (440, 'B+'),(400, 'C+'),(380,'C')
+,(250, 'D'),(200,'E'),(100,'F'),(150,'F'),(220, 'E');
+
+select * from studentmarks;
+use world;
+
+DELIMITER $$										# we can use any symbol as a delimiter 
+create procedure get_student_data()
+BEGIN												# Stored Procedure Example without parameter 
+	SELECT * from studentmarks;
+END$$
+DELIMITER ;
+
+call get_student_data();                            # to call stored procedure we have to use call keyword ( calling stored procedure without argument)
+
+delimiter //                                           # we can use any symbol as a delimiter 
+create procedure world.get_details(in studentid int)
+begin 
+select * from studentmarks where stud_id = studentid;             # Stored Procedure Example with parameter (integer datatype parameter)
+end //
+delimiter ;
+
+call world.get_details(2);                       # calling stored procedure with argument
+
+delimiter $$
+create procedure sp_filter(cont varchar (10))
+begin 
+select * from city where countrycode = cont;				# Stored Procedure Example with parameter (text datatype parameter)
+end $$
+delimiter ;
+
+call sp_filter("IND");
+
+call sp_filter("AFG");
+
+create view Maharahtra as
+select name, countrycode , district , population              # View example  creating view querey
+from city 
+where district = 'Maharashtra' ;
+
+select * from Maharashtra ;                 # calling view querey 
+
+# function clause in SQL 
+
+select district,length(district) as "Length of characters" from city ;       # length keyword 
+
+select district, substr(district , 2)  from city ;
+select * from grades;
+
+select name , substring(name,2) from grades;
+
+select name , substr(name,2) from grades;
+
+select name , substring_index2(name,2) from grades;
